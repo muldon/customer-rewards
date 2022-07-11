@@ -51,7 +51,7 @@ public class OrderServiceImpl extends MainService implements OrderService{
 	}
 
 	@Transactional(readOnly = true)
-	public List<Order> findByIdCustomerId(Integer customerId,Sort by) {		
+	public List<Order> findByCustomerId(Integer customerId,Sort by) {		
 		 Optional<List<Order>> orders = orderRepository.findByCustomerId(customerId,by);
 		 
 		 if(!orders.isPresent()) {

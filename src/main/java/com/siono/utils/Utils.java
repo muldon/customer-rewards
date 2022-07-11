@@ -74,10 +74,13 @@ public class Utils {
 		if(searchParams.getRowOffset()==null) {
 			searchParams.setRowOffset(0);
 		}
+		
+		if(searchParams.getSortOrder()==null) {
+			searchParams.setSortOrder(-1); //descending
+		}
  
 		if(isBlank(searchParams.getSortField())) {
-			searchParams.setSortField("id");
-			searchParams.setSortOrder(-1);
+			searchParams.setSortField("id");			
 		}
 		
 		if(searchParams.getNumRowsPerPage()==null || searchParams.getNumRowsPerPage() <= 0) {

@@ -42,6 +42,9 @@ public class SearchParams implements Serializable {
 	@XmlElement
 	Integer idStatus; 
 	
+	@XmlElement
+	Integer idCustomer; 
+	
 	
 	
 }

@@ -24,10 +24,46 @@ public class GenericRepositoryImpl implements GenericRepository {
  
 
 	@Override
+	public void findOrdersByFilters(SearchParams searchParams, Order wrapper) {
+		String sql= "select o from Order o ";			
+		StringBuilder sb = new StringBuilder(sql);
+		sb.append(" where 1=1"); //not nice ok, but functional :). Since this just a demo app, no big deal... 
+				
+		if(searchParams.getIdStatus()!=null) {
+			sb.append(" and o.statusId = :idStatus");
+		}
+		if(searchParams.getIdCustomer()!=null) {
+			sb.append(" and o.customerId = :idCustomer");
+		}
+		 		
+		sb.append(" order by o."+searchParams.getSortField());
+		if(searchParams.getSortOrder().equals(-1)) {
+			sb.append(" desc");
+		}		 
+		
+		Query q = em.createQuery(sb.toString(), Order.class);
+		if(searchParams.getIdStatus()!=null) {
+			q.setParameter("idStatus", searchParams.getIdStatus());
+		}
+		if(searchParams.getIdCustomer()!=null) {
+			q.setParameter("idCustomer", searchParams.getIdCustomer());
+		}
+		
+		wrapper.setTotal(q.getResultList().size());
+		q.setFirstResult(searchParams.getRowOffset());
+		q.setMaxResults(searchParams.getNumRowsPerPage());
+		
+		List<Order> rows = q.getResultList();		 
+		wrapper.setData(rows);		
+		
+		
+	}
+
+	@Override
 	public void findUsersByFilters(SearchParams searchParams, User wrapper) {
 		String sql= "select u from User u ";			
 		StringBuilder sb = new StringBuilder(sql);
-		sb.append(" where 1=1"); //not nice, but functional :) 
+		sb.append(" where 1=1"); //again, not nice ok, but functional :). Since this just a demo app, no big deal... 
 		
 		
 		if(searchParams.getIdStatus()!=null) {
@@ -59,11 +95,6 @@ public class GenericRepositoryImpl implements GenericRepository {
 	}
 
 
-	@Override
-	public void findOrdersByFilters(SearchParams searchParams, Order wrapper) {
-		// TODO Auto-generated method stub
-		
-	}
 
  
 

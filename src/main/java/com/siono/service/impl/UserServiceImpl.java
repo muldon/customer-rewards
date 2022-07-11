@@ -2,6 +2,7 @@ package com.siono.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,11 @@ public class UserServiceImpl extends MainService implements UserService{
 
 	@Transactional(readOnly = true)
 	public User findById(Integer id) {
-		User v = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Id not found: "+id));
-		return v;				
+		Optional<User> v = userRepository.findById(id);
+		if(v.isPresent()) {
+			return v.get();
+		}
+		return null;				
 	}
 
 	 

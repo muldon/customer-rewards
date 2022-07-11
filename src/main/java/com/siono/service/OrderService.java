@@ -17,7 +17,7 @@ public interface OrderService {
 
 	public Order findById(Integer id);
 
-	public List<Order> findByIdCustomerId(Integer customerId, Sort by);
+	public List<Order> findByCustomerId(Integer customerId, Sort by);
 
 	public void deleteById(Integer id);
 

@@ -35,7 +35,7 @@ public class MockDataConfig {
 
 	@PostConstruct
 	public void mockData() {
-		log.info("Mocking app data. First cleaning the dataset...");
+		log.info("Simulating app data. First cleaning the dataset...");
 		
 		//I know I shouldn't access the database directly ... but ok, I am just a demo app...
 		orderRepository.deleteAll();		
