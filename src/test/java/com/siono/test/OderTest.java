@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer;
@@ -107,6 +110,13 @@ class OderTest {
 		orderService.findByFilters(searchParams,order);
 		log.info("findByFiltersTest - now checking the second page with 5 rows per page: "+order.getData().size());
 		assertTrue(order.getData().size()==5);
+		
+		searchParams = new SearchParams();
+		searchParams.setInitDate(Timestamp.from(Instant.now().minus(Duration.ofDays(3 * 30))));  //last 3 months
+		orderService.findByFilters(searchParams,order);
+		log.info("findByFiltersTest - now checking orders with date > "+Utils.formatDate(searchParams.getInitDate())+ " : "+ order.getData().size());
+		
+		
 		
 	}
 	

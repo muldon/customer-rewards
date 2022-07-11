@@ -1,6 +1,7 @@
 package com.siono.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,6 +46,10 @@ public class SearchParams implements Serializable {
 	@XmlElement
 	Integer idCustomer; 
 	
+	@XmlElement	
+	Timestamp initDate;
 	
+	@XmlElement	
+	Timestamp endDate;
 	
 }

@@ -54,6 +54,7 @@ public class Utils {
 
 	 
 	
+	//The synchronized key-word guarantees that our methods are thread safe 	
 	public synchronized static String getCurrentDate() {
 		return sdfFull.format(Calendar.getInstance().getTime());
 	}
@@ -100,6 +101,8 @@ public class Utils {
 		return lowerCase;
 	}
 	
+	 
+	
 	public static double getRandomNumberInRange(double rangeMin, double rangeMax) {
 		double random = ThreadLocalRandom.current().nextDouble(rangeMin, rangeMax);
 		return random;		
@@ -113,15 +116,7 @@ public class Utils {
 	    return LocalDate.ofEpochDay(randomDay);
 	}
 	
-	public static Instant getRandomDateBetween(Instant startInclusive, Instant endExclusive) {
-	    long startSeconds = startInclusive.getEpochSecond();
-	    long endSeconds = endExclusive.getEpochSecond();
-	    long random = ThreadLocalRandom
-	      .current()
-	      .nextLong(startSeconds, endSeconds);
-
-	    return Instant.ofEpochSecond(random);
-	}
+	
 	
 	
 	public static User createTestUser() {
@@ -134,6 +129,16 @@ public class Utils {
 		user.setDate(new Timestamp(System.currentTimeMillis()));	
 
 		return user;
+	}
+	
+	public static Instant getRandomDateBetween(Instant startInclusive, Instant endExclusive) {
+	    long startSeconds = startInclusive.getEpochSecond();
+	    long endSeconds = endExclusive.getEpochSecond();
+	    long random = ThreadLocalRandom
+	      .current()
+	      .nextLong(startSeconds, endSeconds);
+
+	    return Instant.ofEpochSecond(random);
 	}
 
 	public static Order createTestOrder(Integer customerId) {

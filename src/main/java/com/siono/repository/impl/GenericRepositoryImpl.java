@@ -35,6 +35,13 @@ public class GenericRepositoryImpl implements GenericRepository {
 		if(searchParams.getIdCustomer()!=null) {
 			sb.append(" and o.customerId = :idCustomer");
 		}
+		if(searchParams.getInitDate()!=null) {
+			sb.append(" and o.date > to_timestamp(:initDate, 'YYYY-MM-DD HH24:MI:SS')");
+		}
+		
+		if(searchParams.getEndDate()!=null) {
+			sb.append(" and o.date < to_timestamp(:endDate, 'YYYY-MM-DD HH24:MI:SS')");
+		}
 		 		
 		sb.append(" order by o."+searchParams.getSortField());
 		if(searchParams.getSortOrder().equals(-1)) {
@@ -48,6 +55,14 @@ public class GenericRepositoryImpl implements GenericRepository {
 		if(searchParams.getIdCustomer()!=null) {
 			q.setParameter("idCustomer", searchParams.getIdCustomer());
 		}
+		if(searchParams.getInitDate()!=null) {
+			q.setParameter("initDate", searchParams.getInitDate());
+		}
+		
+		if(searchParams.getEndDate()!=null) {
+			q.setParameter("endDate", searchParams.getInitDate());
+		}
+		
 		
 		wrapper.setTotal(q.getResultList().size());
 		q.setFirstResult(searchParams.getRowOffset());
@@ -61,36 +76,7 @@ public class GenericRepositoryImpl implements GenericRepository {
 
 	@Override
 	public void findUsersByFilters(SearchParams searchParams, User wrapper) {
-		String sql= "select u from User u ";			
-		StringBuilder sb = new StringBuilder(sql);
-		sb.append(" where 1=1"); //again, not nice ok, but functional :). Since this just a demo app, no big deal... 
-		
-		
-		if(searchParams.getIdStatus()!=null) {
-			sb.append(" and u.statusId = :idStatus");
-		}
-
-		if(!Utils.isBlank(searchParams.getSearchText())) {
-			String searchText = Utils.sanitize(searchParams.getSearchText().toLowerCase());
-			sb.append(" and (lower(u.name) like '%"+searchText+"%' or lower(u.email) like '%"+searchText+"%' or lower(u.phone)) ");					
-		} 
-		 		
-		sb.append(" order by ue."+searchParams.getSortField());
-		if(searchParams.getSortOrder().equals(-1)) {
-			sb.append(" desc");
-		}		 
-		
-		Query q = em.createQuery(sql, User.class);
-		if(searchParams.getIdStatus()!=null) {
-			q.setParameter("idStatus", searchParams.getIdStatus());
-		}
-		
-		wrapper.setTotal(q.getResultList().size());
-		q.setFirstResult(searchParams.getRowOffset());
-		q.setMaxResults(searchParams.getNumRowsPerPage());
-		
-		List<User> rows = q.getResultList();		 
-		wrapper.setData(rows);		
+		//Similar to orders, but not in use for now... 
 		
 	}
 
