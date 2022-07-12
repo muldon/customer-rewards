@@ -2,7 +2,6 @@ package com.siono.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -11,17 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.siono.aspect.Loggable;
 import com.siono.model.CustomerRewards;
-import com.siono.model.MessageResponse;
-import com.siono.model.Order;
-import com.siono.model.SearchParams;
 import com.siono.service.MainService;
-import com.siono.service.OrderService;
 import com.siono.service.RewardsService;
-import com.siono.utils.Utils;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @Transactional
 public class RewardsServiceImpl extends MainService implements RewardsService{	   
@@ -54,6 +46,14 @@ public class RewardsServiceImpl extends MainService implements RewardsService{
 		return reward;
 		 
 	}
+	
+
+	@Override
+	@Transactional(readOnly = true)	
+	public List<CustomerRewards> findByCustomerIdAndDateAfter(Integer customerId, Timestamp dateFrom, Sort sort) {
+		return customerRewardsRepository.findByCustomerIdAndDateAfter(customerId,dateFrom, sort);
+	}
+
 
 
 	// -----------------------------------------------   Transacional Methods ------------------------------------------ //
@@ -64,6 +64,10 @@ public class RewardsServiceImpl extends MainService implements RewardsService{
 		customerRewardsRepository.deleteByOrderId(orderId);
 		
 	}
+
+
+	
+
 	 
 
 }

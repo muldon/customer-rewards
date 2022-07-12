@@ -1,9 +1,7 @@
 package com.siono.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,7 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @XmlRootElement
 @Getter
 @Setter
@@ -23,18 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class Statement implements Serializable {
-
-	private static final long serialVersionUID = -123291921465937662L;
-
-	@XmlElement
-	private String customerName;
-	
-	@XmlElement
-	private List<StatementPeriod> statementPeriods; 
-	
-	@XmlElement
-	private Integer totalPoints; 
-	 
+public class StatementPeriod {
+	Integer month;
+	Integer accumulatedPoints;	
 }
- 

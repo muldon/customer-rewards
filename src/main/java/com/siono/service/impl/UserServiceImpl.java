@@ -44,12 +44,9 @@ public class UserServiceImpl extends MainService implements UserService{
 	}
 
 	@Transactional(readOnly = true)
-	public User findById(Integer id) {
+	public Optional<User> findById(Integer id) {
 		Optional<User> v = userRepository.findById(id);
-		if(v.isPresent()) {
-			return v.get();
-		}
-		return null;				
+		return v;				
 	}
 
 	 

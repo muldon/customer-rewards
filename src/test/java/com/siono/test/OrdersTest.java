@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class OderTest {
+class OrdersTest {
 	public static Integer orderId;
 	public static Integer userId;
 	 
@@ -161,19 +161,6 @@ class OderTest {
 		
 	}
 	
-	@Test
-	@org.junit.jupiter.api.Order(9)
-	public void rewardPointsTest() {
-		
-		Double transactionValue = 120d;
-		int points = rewardsService.calculateRewardPoints(transactionValue);
-		assertTrue(points == 90);  //with a scoring factor = 1
-		
-		transactionValue = 70d;
-		points = rewardsService.calculateRewardPoints(transactionValue);
-		assertTrue(points == 20); 
-		
-	}
-	
+	 
 
 }

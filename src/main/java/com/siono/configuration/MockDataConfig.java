@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ import com.siono.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Configuration
 public class MockDataConfig {
 	@Autowired
 	OrderRepository orderRepository;	 

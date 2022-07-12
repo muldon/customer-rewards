@@ -97,8 +97,8 @@ public class OrderServiceImpl extends MainService implements OrderService{
 		}
 		
 		orderRepository.save(to);
-		if(points>0) { //customer is earning points
-			CustomerRewards cr = new CustomerRewards(null,to.getCustomerId(), to.getId(),OperationEnum.INPUT.getId(),points,new Timestamp(System.currentTimeMillis()));
+		if(points>0) { //customer is receiving points
+			CustomerRewards cr = new CustomerRewards(null,to.getCustomerId(), to.getId(),OperationEnum.INPUT.getId(),points,to.getDate());
 			customerRewardsRepository.save(cr);
 		}
 		

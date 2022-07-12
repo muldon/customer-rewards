@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -125,6 +126,7 @@ public class Utils {
 	
 	public static User createTestUser() {
 		User user = new User();		
+		user.setId(1);
 		user.setName("Rick Silva");
 		user.setStatusId(UserStatusEnum.ACTIVE.getId());
 		user.setEmail("ricksilva@gmail.com");
@@ -156,6 +158,7 @@ public class Utils {
 		Instant now = Instant.now();
 		Instant random = getRandomDateBetween(threeMonthsAgo, now);		
 		order.setDate(Timestamp.from(random));
+		
 		return order;
 	}
 	
@@ -166,6 +169,11 @@ public class Utils {
 		}		
 		
 		return orders;
+	}
+	
+	public static Integer getMonthFromDate(Timestamp date) {
+		LocalDate localDate = date.toLocalDateTime().toLocalDate();
+		return localDate.getMonthValue();
 	}
  
 	   
