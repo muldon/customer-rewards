@@ -111,9 +111,9 @@ public class User extends GenericTO<User> implements Serializable {
 		private final String description;
 				
 		
-		UserStatusEnum(Integer id,String descricao){
+		UserStatusEnum(Integer id,String description){
 			this.id = id;
-			this.description = descricao;		
+			this.description = description;		
 		}
 		
 	    public static UserStatusEnum getStatusById(Integer id){

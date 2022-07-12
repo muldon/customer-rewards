@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.siono.model.Order;
 import com.siono.model.User;
+import com.siono.repository.CustomerRewardsRepository;
 import com.siono.repository.OrderRepository;
 import com.siono.repository.UserRepository;
 import com.siono.service.OrderService;
@@ -28,6 +29,9 @@ public class MockDataConfig {
 	UserRepository userRepository;
 	
 	@Autowired
+	CustomerRewardsRepository customerRewardsRepository;
+	
+	@Autowired
 	OrderService orderService;
 
 	@Autowired
@@ -38,7 +42,8 @@ public class MockDataConfig {
 		log.info("Simulating app data. First cleaning the dataset...");
 		
 		//I know I shouldn't access the database directly ... but ok, I am just a demo app...
-		orderRepository.deleteAll();		
+		customerRewardsRepository.deleteAll();
+		orderRepository.deleteAll();			
 		userRepository.deleteAll();
 		
 		log.info("Now rebuilding it...");

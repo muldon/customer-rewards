@@ -17,8 +17,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.siono.model.CustomerRewards;
 import com.siono.model.Order;
 import com.siono.model.Order.OrderStatusEnum;
 import com.siono.model.SearchParams;
@@ -35,6 +37,8 @@ public class Utils {
 	static DateFormat sdfMin; 
 	static Calendar calendar;
 	static DecimalFormat df;	
+	
+	
 	
 	@PostConstruct
 	public void configure() {		
@@ -163,6 +167,6 @@ public class Utils {
 		
 		return orders;
 	}
-	
+ 
 	   
 }

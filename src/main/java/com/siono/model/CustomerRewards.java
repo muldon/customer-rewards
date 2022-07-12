@@ -23,9 +23,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@XmlRootElement(name = "order")
+@XmlRootElement(name = "customerRewards")
 @Entity
-@Table(name = "cr_order")
+@Table(name = "customer_rewards")
 @Getter
 @Setter
 @ToString
@@ -33,14 +33,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class Order extends GenericTO<Order> implements Serializable {
+public class CustomerRewards extends GenericTO<CustomerRewards> implements Serializable {
  
    private static final long serialVersionUID = 1L;
    
    @EqualsAndHashCode.Include
    @Id
-   @SequenceGenerator(name="order_id_seq", sequenceName="order_id_seq",allocationSize=1)
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="order_id_seq")
+   @SequenceGenerator(name="customer_rewards_id_seq", sequenceName="customer_rewards_id_seq",allocationSize=1)
+   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="customer_rewards_id_seq")
    @XmlElement
    private Integer id;
    
@@ -48,32 +48,30 @@ public class Order extends GenericTO<Order> implements Serializable {
    @Column(name = "customer_id")
    private Integer customerId;
    
-   @XmlElement
-   @Column(name = "status_id")
-   private Integer statusId;
+   @XmlElement(name = "orderId")
+   @Column(name = "order_id")
+   private Integer orderId;
    
-   @XmlElement(name = "totalValue")
-   @Column(name = "total_value")
-   private Double totalValue; 
+   @XmlElement
+   @Column(name = "operation_id")
+   private Integer operationId;
+   
+   @XmlElement(name = "numPoints")
+   @Column(name = "num_points")
+   private Integer numPoints; 
   
    @XmlElement
    private Timestamp date;    
       
    
-   //we could have many order different status in a more complete app. So for example, first the order is born (requested), than it goes through a workflow .. 
-	public enum OrderStatusEnum {            
-		REQUESTED            (1,"Requested"), 
-		PROCESSING           (2,"Processing"),
-		CANCELED_BY_CUSTOMER (3,"Canceled by Customer"),
-	    REJECTED   			 (4,"Rejected"),
-	    APPROVED             (5,"Approved"),
-		PAID	             (6,"Paid"),
-		DELIVERED            (7,"Delivered");
+	public enum OperationEnum {
+		INPUT                (1,"Input"),    //customer earns points
+		OUTPUT	             (2,"Output");   //customer spend points		
 	    
 		private final Integer id;
 		private final String description;				
 		
-		OrderStatusEnum(Integer id,String description){
+		OperationEnum(Integer id,String description){
 			this.id = id;
 			this.description = description;
 		

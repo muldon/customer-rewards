@@ -1,7 +1,6 @@
 package com.siono.test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,13 +15,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.siono.model.Order;
+import com.siono.model.Order.OrderStatusEnum;
 import com.siono.model.SearchParams;
 import com.siono.model.User;
-import com.siono.model.Order.OrderStatusEnum;
 import com.siono.service.OrderService;
+import com.siono.service.RewardsService;
 import com.siono.service.UserService;
 import com.siono.utils.Utils;
 
@@ -40,6 +39,9 @@ class OderTest {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RewardsService rewardsService;
  
 	@Test
 	@org.junit.jupiter.api.Order(1)
@@ -70,6 +72,10 @@ class OderTest {
 	@Test
 	@org.junit.jupiter.api.Order(4)
 	public void deleteTest() {
+		
+		//first delete the Customer Rewards related to that order
+		rewardsService.deleteByOrderId(orderId);
+		
 		orderService.deleteById(orderId);
 		
 		Exception exception = assertThrows(RuntimeException.class, () -> {
@@ -134,11 +140,11 @@ class OderTest {
 	public void updateByIdTest() {
 		List<Order> allOrders = orderService.findAll(Sort.by(Sort.Direction.ASC,"id"));
 		Order first = allOrders.get(0);
-		first.setTotalValue(1d);
+		first.setStatusId(OrderStatusEnum.PROCESSING.getId());
 		orderService.updateById(first.getId(), first);
 		
 		Order firstTmp = orderService.findById(first.getId());
-		assertTrue(firstTmp.getTotalValue().equals(1d));
+		assertTrue(firstTmp.getStatusId().equals(OrderStatusEnum.PROCESSING.getId()));
 		
 	}
 	
@@ -152,6 +158,20 @@ class OderTest {
 		
 		Order firstTmp = orderService.findById(first.getId());
 		assertTrue(firstTmp.getStatusId().equals(OrderStatusEnum.PAID.getId()));
+		
+	}
+	
+	@Test
+	@org.junit.jupiter.api.Order(9)
+	public void rewardPointsTest() {
+		
+		Double transactionValue = 120d;
+		int points = rewardsService.calculateRewardPoints(transactionValue);
+		assertTrue(points == 90);  //with a scoring factor = 1
+		
+		transactionValue = 70d;
+		points = rewardsService.calculateRewardPoints(transactionValue);
+		assertTrue(points == 20); 
 		
 	}
 	

@@ -3,6 +3,7 @@ package com.siono.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.siono.model.MessageResponse;
+import com.siono.repository.CustomerRewardsRepository;
 import com.siono.repository.GenericRepository;
 import com.siono.repository.OrderRepository;
 import com.siono.repository.UserRepository;
@@ -15,6 +16,10 @@ public abstract class MainService {
 	
 	@Autowired
 	protected UserRepository userRepository;
+	
+	@Autowired
+	protected CustomerRewardsRepository customerRewardsRepository;
+	
 	
 	@Autowired
 	protected GenericRepository genericRepository;
