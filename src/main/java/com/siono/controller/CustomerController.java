@@ -99,7 +99,7 @@ public class CustomerController {
 			accumulatedBalance+= balanceMonth;
 			StatementPeriod sp = new StatementPeriod(month, balanceMonth,accumulatedBalance);
 			statementPeriods.add(sp);
-		}
+		} 
 		responseWrapper.setTotalPoints(accumulatedBalance);
 		responseWrapper.setStatementPeriods(statementPeriods);
 	}
