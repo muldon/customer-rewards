@@ -71,7 +71,7 @@ When the app is initialized, a configuration class automatically refresh the dat
 
 ![customer_rewards](https://github.com/muldon/customer-rewards/blob/master/customer_rewards.png)
 
-obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
+obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstracts the logics in the order table to make it simple and let us focus on the rewards feature. 
 
 
 ## Running the app 
