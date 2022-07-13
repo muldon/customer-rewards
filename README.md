@@ -118,7 +118,9 @@ After some time, the *customer-rewards* should be up and running. Check it:
 
 Then, access the URL in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html). Note that we run the app at port 8085 as in your yml file.  
 
-### Prerequisites
+### Running without containers
+
+#### Prerequisites
 
 1. [Java 11+](https://jdk.java.net/11/) 
 2. [Maven 3+](https://maven.apache.org)
