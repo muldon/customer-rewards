@@ -78,8 +78,31 @@ obs. in a more complete app, there could exist a product table containing produc
 1. [Docker 20.10.7+](https://www.docker.com/) 
 2. [Docker Compose 3.9+](https://www.docker.com/) 
 
-Edit the file `customer-rewards-all-local.yml`. Edit the path "/home/rodrigo/projects/customer-rewards/logs" and set your volume path, such as "/home/jack/tmp" and make sure the path has writing permissions. 
+Download the file `customer-rewards-all-local.yml`. Then, edit the file and change the path "/home/rodrigo/projects/customer-rewards/logs" to your volume path, such as "/home/jack/tmp" and make sure that your path has writing permissions. Also, make sure no other containers or processes are running at ports 5432 and 8085. Then, at the same folder as the file, run:
 
+`$ docker-compose -f customer-rewards-all-local.yml up -d`
+
+Check that the containers are up and running: 
+
+`$ docker ps`
+
+You must be able to see the the *customer-rewards* container and the *cr_postgres_container* container running. Then, download the file `cr_db.backup` (e.g. to your home folder /home/jack) and copy it to the postgres container as follows: 
+
+`$ docker cp /home/jack/cr_db.backup cr_postgres_container:/cr_db.backup`
+
+then, connect to the container:
+
+`$ docker exec -it cr_postgres_container` 
+
+then, create the database: 
+
+`$ CREATE DATABASE "siono-db" WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;`
+
+and finally restore the database:
+
+`$ pg_restore -U postgres -h localhost -d sionodb --no-owner -1 /cr_db.backup`
+
+and with the credentials as in your yml file (e.g. "mypqdbpass"). 
 
 
 ### Prerequisites
