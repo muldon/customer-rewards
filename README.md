@@ -23,7 +23,7 @@ The complete challenge description is in the [CodingChallenge file](https://gith
 ### Demo 
 The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). [Swagger](https://swagger.io/) was used to provide the details about the endpoints. Basically the app provides two get methods:
 - /customer/list: returns a list of active customer names (2 for this example)
-- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of previous days (e.g. 90), returns the statement of the points the user per month. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, we focus on the gain. A complete URL example to get a user statement for the last 90 days is [here](http://161.97.114.171:8085/customer/statement/1/90).
+- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of previous days (e.g. 90), returns the statement of the points the user per month. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. A complete URL example to get a user statement for the last 90 days is [here](http://161.97.114.171:8085/customer/statement/1/90).
 
 ## Technologies involved
  
@@ -38,13 +38,29 @@ The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui
 | [Docker](https://www.docker.com/)   | 20.10.7 |
 | [Jenkins](https://www.jenkins.io/)   | 2.346.1 LTS |
 
-obs. We used Java 11 instead of the 17th due to compatibitity issues with Jenkins. 
+obs. Java 11 was used instead of the 17th due to compatibitity issues with Jenkins. 
 
 
 ### Database  
 
+The [Ondras](https://ondras.zarovi.cz/sql/demo/) tool was used to model the database as follows:
+
 ![DER](https://github.com/muldon/customer-rewards/blob/master/cr-der.png)
 
+The app contains three tables: 
+- cr_user: contains the users, that could be admin users or customers. In this example 
+- cr_order: contains the orders (transactions). 
+- customer_rewards: contains the points accumulated during the transactions acording to three parameters (explained ahead). Each row in this table could represent a gain of points or a expense indicated by the operation_id, though in this app example only the gains are showed. 
+
+When the app is initialized, a configuration class automatically refresh the data, keeping two users and inserting orders with randon values and dates. As the orders are inserted, the reward points are calculated and inserted in the customer_rewards table. The images below show examples of these data:
+
+cr_users: 
+![cr_users](https://github.com/muldon/customer-rewards/blob/master/cr_user.png)
+
+
+obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
+
+parameters ...
 
 
 
@@ -53,24 +69,7 @@ obs. We used Java 11 instead of the 17th due to compatibitity issues with Jenkin
 
 Note: all the experiments were conducted over a server equipped with 32 GB RAM, 3.1 GHz on four cores and 64-bit Linux Mint Cinnamon operating system. We strongly recommend a similar or better hardware environment. The operating system however could be changed. 
 
-
-Softwares:
-1. [Java 1.8] 
-2. [Postgres 9.4] - Configure your DB to accept local connections. An example of *pg_hba.conf* configuration:
-
-```
-...
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-# "local" is for Unix domain socket connections only
-local   all             all                                     md5
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            md5
-...
-```
-3. [PgAdmin] (we used PgAdmin 4) but feel free to use any DB tool for PostgreSQL. 
-
-4. [Maven 3](https://maven.apache.org/). Assert Maven is correctly installed. In a Terminal enter with the command: `mvn --version`. This should return the version of Maven. 
-
+ 
 
 ## Running the tool mode 1 - replication package
 
