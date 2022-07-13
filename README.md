@@ -43,7 +43,7 @@ obs. We used Java 11 instead of the 17th due to compatibitity issues with Jenkin
 
 ### Database  
 
-![DER]([https://github.com/muldon/CROKAGE-replication-package/blob/master/RESTED-POST.png](https://github.com/muldon/customer-rewards/blob/master/cr-der.png))
+![DER](https://github.com/muldon/customer-rewards/blob/master/cr-der.png)
 
 
 
