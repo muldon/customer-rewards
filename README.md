@@ -92,17 +92,26 @@ You must be able to see the the *customer-rewards* container and the *cr_postgre
 
 then, connect to the container:
 
-`$ docker exec -it cr_postgres_container` 
+`$ docker exec -it cr_postgres_container bash` 
 
 then, create the database: 
 
-`$ CREATE DATABASE "siono-db" WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;`
+`$ su - postgres`
+
+`$ psql`
+
+`$ CREATE DATABASE "sionodb" WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;`
+
+`$ \q`
 
 and finally restore the database:
 
 `$ pg_restore -U postgres -h localhost -d sionodb --no-owner -1 /cr_db.backup`
 
 and with the credentials as in your yml file (e.g. "mypqdbpass"). 
+
+`$ mypqdbpass`
+
 
 
 ### Prerequisites
