@@ -59,11 +59,10 @@ public class CustomerController {
 	@Operation(summary = "Shows the names of active customers")	
 	@GetMapping("/list")
 	@ResponseStatus(HttpStatus.OK)
-	public List<String> getCustomersNames() {
-		User wrapper = new User();
+	public List<String> getCustomerNames() {
 		List<User> activeUsers = userService.findByRoleIdAndStatusId(UserRoleEnum.CUSTOMER.getId(),UserStatusEnum.ACTIVE.getId(),Sort.by(Sort.Direction.ASC,"name"));
-		List<String> customersNames = activeUsers.stream().map(u -> u.getName()).collect(Collectors.toCollection(ArrayList::new));
-		return customersNames;
+		List<String> customerNames = activeUsers.stream().map(u -> u.getName()).collect(Collectors.toCollection(ArrayList::new));
+		return customerNames;
 	}
 	
 
