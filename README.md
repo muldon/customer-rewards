@@ -152,8 +152,12 @@ You can change the app parameters by editing the file `application.context` unde
 These parameters are used in the formula to calculate the reward points as follows: *(purchaseValue - rewardBaseline1) x scoring.factor + (purchaseValue - rewardBaseline2) x scoring.factor = total points*
 
 
-### JUnit tests
+## JUnit tests
 Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where one is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
+
+
+## CI/CD
+The project contains a Jenkins file with a basic CI/CD pipeline. This pipeline is triggered by the `#build` token inside the git commit message. Everytime the developers commits a message containing this token, the pipeline run some maven commands (e.g. clean, install, test), build a docker image with sequenced generated ID and then push the image to a [Docker Hub](https://hub.docker.com) repository. It also notifies by email in case the build fails to run. This pipeline assumes the host contains a postgres running and the customer-rewards database.  
 
 ## License
 
