@@ -89,7 +89,7 @@ Check that your postgres is up and running at port 5432 (default), and Java, Mav
 ```sh
 $ mvn package spring-boot:run
 ```
-This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
   
 
 ### Running with containers
