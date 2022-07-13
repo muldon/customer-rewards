@@ -86,7 +86,7 @@ Check that the containers are up and running:
 
 `$ docker ps`
 
-You must be able to see the the *customer-rewards* container and the *cr_postgres_container* container running. Then, download the file `cr_db.backup` (e.g. to your home folder /home/jack) and copy it to the postgres container as follows: 
+You must be able to see the the *customer-rewards* container and the *cr_postgres_container* container running. But the database is not created yet, so despite the app is running, it can not connect to the database, thus it will fail to run. We need to create the database. Download the file `cr_db.backup` (e.g. to your home folder /home/jack) and copy it to the postgres container as follows: 
 
 `$ docker cp /home/jack/cr_db.backup cr_postgres_container:/cr_db.backup`
 
@@ -112,7 +112,11 @@ and with the credentials as in your yml file (e.g. "mypqdbpass").
 
 `$ mypqdbpass`
 
+After some time, the *customer-rewards* should be up and running. Check it: 
 
+`$ docker logs customer-rewards`. If it presents an error, don't worry, the container did not restart yet. You just need to try again in a few seconds. After it restarts, the log shall present the message at the end: "Started CustomerRewardsApp in... seconds". 
+
+Then, access the URL in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html). Note that we run the app at port 8085 as in your yml file.  
 
 ### Prerequisites
 
