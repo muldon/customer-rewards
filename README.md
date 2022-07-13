@@ -23,7 +23,12 @@ The complete challenge description is in the [CodingChallenge file](https://gith
 ### Demo 
 The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). [Swagger](https://swagger.io/) was used to provide the details about the endpoints. Basically the app provides two get methods:
 - /customer/list: returns a list of active customer names (2 for this example). Example [here](http://161.97.114.171:8085/customer/list).
-- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of days, e.g. 90 (last 3 months), returns the statement of the points the user per month and a total. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. Example [here](http://161.97.114.171:8085/customer/statement/1/90): get a user statement for the last 3 months.
+- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of days, e.g. 90 (last 3 months), returns the statement of the points the user per month and a total. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. Example [here](http://161.97.114.171:8085/customer/statement/1/90): get a user statement for the last 3 months. 
+
+The endpoints do not require a *content-type* in the request. Thus, you can test it using not only the [Swagger](https://swagger.io/) interface, but also your browser (for the two available get requests) or any other REST API tool, such as the RESTED browser plugin (available for chrome and firefox) or [Postman](https://www.postman.com/). The image bellow shows how to make a REST request using the [firefox RESTED plugin[(https://addons.mozilla.org/en-US/firefox/addon/rested/).
+
+![DER](https://github.com/muldon/customer-rewards/blob/master/cr-der.png)
+
 
 ## Technologies involved
  
