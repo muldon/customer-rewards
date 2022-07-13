@@ -69,9 +69,25 @@ When the app is initialized, a configuration class automatically refresh the dat
 obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
 
 
-## Running the app localy
+## Running the app 
 
-### Quick run with containers
+### Running without containers
+
+#### Prerequisites
+
+1. [Java 11+](https://jdk.java.net/11/) 
+2. [Maven 3+](https://maven.apache.org)
+3. [pgAdmin 4](https://www.pgadmin.org/download/)
+4. [PostgreSQL 13.5](https://www.postgresql.org)  
+
+Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
+```sh
+$ mvn package spring-boot:run
+```
+This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html).
+  
+
+### Running with containers
 
 #### Prerequisites
 
@@ -121,16 +137,6 @@ If it presents an error, don't worry, the container did not restart yet. You jus
 
 Then, access the URL in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html). Note that we run the app at port 8085 as in your yml file.  
 
-### Running without containers
-
-#### Prerequisites
-
-1. [Java 11+](https://jdk.java.net/11/) 
-2. [Maven 3+](https://maven.apache.org)
-3. [Docker 20.10.7+](https://www.docker.com/) 
-4. [Docker Compose 3.9+](https://www.docker.com/) 
- 
-  
 
 
 ## License
