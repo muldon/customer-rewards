@@ -17,8 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	User findByEmail(String email);
 
 	User findByPhone(String phone);
-
-	List<User> findByRoleId(Integer roleId, Sort sort);
+	 
 
 	@Modifying
 	@Query("update User u set u.email = ?1 where u.id = ?2")
@@ -27,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Modifying
 	@Query("update User u set u.statusId = ?2 where u.id = ?1")
 	void changeStatus(Integer id, Integer statusId);
+
+	List<User> findByRoleIdAndStatusId(Integer roleId, Integer statusId, Sort by);
 
 	 
 }

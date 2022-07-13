@@ -25,6 +25,7 @@ public class GenericRepositoryImpl implements GenericRepository {
 
 	@Override
 	public void findOrdersByFilters(SearchParams searchParams, Order wrapper) {
+		log.debug("findOrdersByFilters with params: "+searchParams);
 		String sql= "select o from Order o ";			
 		StringBuilder sb = new StringBuilder(sql);
 		sb.append(" where 1=1"); //not nice ok, but functional :). Since this just a demo app, no big deal... 

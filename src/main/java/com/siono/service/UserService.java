@@ -25,4 +25,6 @@ public interface UserService {
 
 	public MessageResponse changeStatus(User order);
 
+	public List<User> findByRoleIdAndStatusId(Integer roleId, Integer statusId, Sort by);
+
 }

@@ -48,9 +48,14 @@ public class MockDataConfig {
 		userRepository.deleteAll();
 		
 		log.info("Now rebuilding it...");
-		User user = Utils.createTestUser();
+		User user = Utils.createTestUser(1,"Rick Silva");
 		userService.save(user);
-		log.info("First (and only) user: "+user);
+		log.info("First user: "+user);
+		
+		User user2 = Utils.createTestUser(2,"Robert Caldwel");
+		userService.save(user2);
+		log.info("Second user: "+user2);
+		
 		
 		List<Order> randomOrders = Utils.generateOrdersList(user.getId());
 		for(Order order: randomOrders) {

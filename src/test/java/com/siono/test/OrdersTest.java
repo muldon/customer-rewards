@@ -46,7 +46,7 @@ class OrdersTest {
 	@Test
 	@org.junit.jupiter.api.Order(1)
 	public void createTest() {
-		User user = Utils.createTestUser();
+		User user = Utils.createTestUser(1,"Rick Silva");
 		userService.save(user);
 		userId = user.getId();
 		Order order = Utils.createTestOrder(user.getId());

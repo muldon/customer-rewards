@@ -37,9 +37,7 @@ public class Utils {
 	static DateFormat sdfFull; 
 	static DateFormat sdfMin; 
 	static Calendar calendar;
-	static DecimalFormat df;	
-	
-	
+	  
 	
 	@PostConstruct
 	public void configure() {		
@@ -48,16 +46,14 @@ public class Utils {
 	 	
 		sdfFull.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
 		sdfMin.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
-		
-		df = new DecimalFormat("0.00");
+		 
 	}		
 
     
 	public static boolean isBlank(String input) {
 		return StringUtils.isBlank(input);
 	}
-
-	 
+ 
 	
 	//The synchronized key-word guarantees that our methods are thread safe 	
 	public synchronized static String getCurrentDate() {
@@ -124,16 +120,15 @@ public class Utils {
 	
 	
 	
-	public static User createTestUser() {
+	public static User createTestUser(Integer id, String name) {
 		User user = new User();		
-		user.setId(1);
-		user.setName("Rick Silva");
+		user.setId(id);
+		user.setName(name);
 		user.setStatusId(UserStatusEnum.ACTIVE.getId());
-		user.setEmail("ricksilva@gmail.com");
+		user.setEmail(name.replaceAll(" ","").toLowerCase()+"@gmail.com");
 		user.setRoleId(UserRoleEnum.CUSTOMER.getId());
 		user.setPhone("+197412345");
-		user.setDate(new Timestamp(System.currentTimeMillis()));	
-
+		user.setDate(new Timestamp(System.currentTimeMillis()));
 		return user;
 	}
 	
