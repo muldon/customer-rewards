@@ -1,5 +1,5 @@
 # Customer Rewards
-Simple Java back-end spring-boot web program requested by [siono](www.siono.io) as part of its hiring process.  
+Simple Java back-end spring-boot web program requested by [siono](https://www.siono.io) as part of its hiring process.  
 
 ## About
 
@@ -21,7 +21,24 @@ If you are writing in Java, Using Spring Boot is highly recommended but not mand
 The complete challenge description is in the [CodingChallenge file](https://github.com/muldon/customer-rewards/blob/master/CodingChallenge.docx). 
 
 ### Demo 
-The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). 
+The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). [Swagger](https://swagger.io/) was used to provide the details about the endpoints. Basically the app provides two get methods:
+- /customer/list: returns a list of active customer names (2 for this example)
+- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of previous days (e.g. 90), returns the statement of the points the user per month. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, we focus on the gain. A complete URL example to get a user statement for the last 90 days is [here](http://161.97.114.171:8085/customer/statement/1/90).
+
+## Technologies involved
+ 
+| Technology  | Version                                |
+| -------------- | ---------------------------------------------------------------------- |
+| [Java OpenJDK](https://jdk.java.net/11/) | 11     
+| [Maven](https://maven.apache.org)  | 3.6.3 |
+| [Spring Boot](https://spring.io/projects/spring-boot)  | 2.5.6 |
+| [OpenAPI](https://swagger.io/specification/) | 3.0.3
+| [Lombok](https://projectlombok.org/download) | 1.18.24
+| [PostgreSQL](https://www.postgresql.org)   | 13.5 |
+| [Docker](https://www.docker.com/)   | 20.10.7 |
+| [Jenkins](https://www.jenkins.io/)   | 2.346.1 LTS |
+
+obs. We used Java 11 instead of the 17th due to compatibitity issues with Jenkins. 
 
 ### How
 CROKAGE receives as input a query written in natural language and uses state-of-art text retrieval models combined with three state-of-art API recommender tools to retrieve the most related Stack Overflow answers to that query, sorted by relevance. CROKAGE then uses natural language processing to extract the code and relevant sentences to compose a summary containing the solution for the query.  
