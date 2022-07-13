@@ -71,7 +71,7 @@ When the app is initialized, a configuration class automatically refresh the dat
 
 ![customer_rewards](https://github.com/muldon/customer-rewards/blob/master/customer_rewards.png)
 
-obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
+obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstracts the logics in the order table to make it simple and let us focus on the rewards feature. 
 
 
 ## Running the app 
@@ -85,11 +85,11 @@ obs. in a more complete app, there could exist a product table containing produc
 3. [pgAdmin 4](https://www.pgadmin.org/download/)
 4. [PostgreSQL 13.5](https://www.postgresql.org)  
 
-Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
+Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, edit your *application.context* file and set your database password at *spring.datasource.password*. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
 ```sh
 $ mvn package spring-boot:run
 ```
-This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html).
+This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
   
 
 ### Running with containers
