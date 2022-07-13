@@ -85,7 +85,7 @@ obs. in a more complete app, there could exist a product table containing produc
 3. [pgAdmin 4](https://www.pgadmin.org/download/)
 4. [PostgreSQL 13.5](https://www.postgresql.org)  
 
-Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
+Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, edit your *application.context* file and set your database password at *spring.datasource.password*. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
 ```sh
 $ mvn package spring-boot:run
 ```
