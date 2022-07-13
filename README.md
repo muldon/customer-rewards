@@ -54,9 +54,17 @@ The app contains three tables:
 
 When the app is initialized, a configuration class automatically refresh the data, keeping two users and inserting orders with randon values and dates. As the orders are inserted, the reward points are calculated and inserted in the customer_rewards table. The images below show examples of these data:
 
-cr_users: 
+- cr_user: 
+
 ![cr_users](https://github.com/muldon/customer-rewards/blob/master/cr_user.png)
 
+- cr_order: 
+
+![customer_rewards](https://github.com/muldon/customer-rewards/blob/master/cr_order.png)
+
+- customer_rewards:
+
+![customer_rewards](https://github.com/muldon/customer-rewards/blob/master/customer_rewards.png)
 
 obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
 
