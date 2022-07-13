@@ -40,13 +40,14 @@ The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui
 
 obs. We used Java 11 instead of the 17th due to compatibitity issues with Jenkins. 
 
-### How
-CROKAGE receives as input a query written in natural language and uses state-of-art text retrieval models combined with three state-of-art API recommender tools to retrieve the most related Stack Overflow answers to that query, sorted by relevance. CROKAGE then uses natural language processing to extract the code and relevant sentences to compose a summary containing the solution for the query.  
 
-### Features and comparison with other state-of-art works (AnswerBot and BIKER)
-- [AnswerBot](https://dl.acm.org/citation.cfm?id=3155650) is limited as it does not provide code.
-- [BIKER](https://dl.acm.org/citation.cfm?id=3238191) is limited as its documentation is limited to JAVA SE and does not provide code for every query.
-- CROKAGE address both limitations by providing relevant code and explanations in form of summaries.
+### Database  
+
+![DER]([https://github.com/muldon/CROKAGE-replication-package/blob/master/RESTED-POST.png](https://github.com/muldon/customer-rewards/blob/master/cr-der.png))
+
+
+
+
 
 ## Prerequisites
 
