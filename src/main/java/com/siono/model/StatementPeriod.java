@@ -22,5 +22,6 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class StatementPeriod {
 	Integer month;
+	Integer monthPoints;
 	Integer accumulatedPoints;	
 }

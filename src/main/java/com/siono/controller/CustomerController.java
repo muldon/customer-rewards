@@ -97,7 +97,7 @@ public class CustomerController {
 			Integer totalSpentMonth = transactionsForMonth.stream().filter(r -> r.getOperationId().equals(OperationEnum.OUTPUT.getId())).map(r -> r.getNumPoints()).reduce(0, Integer::sum);
 			Integer balanceMonth = totalReceivedMonth - totalSpentMonth;
 			accumulatedBalance+= balanceMonth;
-			StatementPeriod sp = new StatementPeriod(month, accumulatedBalance);
+			StatementPeriod sp = new StatementPeriod(month, balanceMonth,accumulatedBalance);
 			statementPeriods.add(sp);
 		}
 		responseWrapper.setTotalPoints(accumulatedBalance);
