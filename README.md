@@ -22,8 +22,8 @@ The complete challenge description is in the [CodingChallenge file](https://gith
 
 ### Demo 
 The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). [Swagger](https://swagger.io/) was used to provide the details about the endpoints. Basically the app provides two get methods:
-- /customer/list: returns a list of active customer names (2 for this example)
-- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of previous days (e.g. 90), returns the statement of the points the user per month. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. A complete URL example to get a user statement for the last 90 days is [here](http://161.97.114.171:8085/customer/statement/1/90).
+- /customer/list: returns a list of active customer names (2 for this example). Example [here](http://161.97.114.171:8085/customer/list).
+- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of days, e.g. 90 (last 3 months), returns the statement of the points the user per month and a total. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. Example [here](http://161.97.114.171:8085/customer/statement/1/90): get a user statement for the last 3 months.
 
 ## Technologies involved
  
@@ -68,18 +68,28 @@ When the app is initialized, a configuration class automatically refresh the dat
 
 obs. in a more complete app, there could exist a product table containing products that the customer would purchase and an order_item table, containing the items of the order. This app abstract the logics in order to make it simple and focus on the rewards feature. 
 
-parameters ...
+
+## Running the app localy
+
+### Quick run with containers
+
+#### Prerequisites
+
+1. [Docker 20.10.7+](https://www.docker.com/) 
+2. [Docker Compose 3.9+](https://www.docker.com/) 
 
 
 
 
-## Prerequisites
 
-Note: all the experiments were conducted over a server equipped with 32 GB RAM, 3.1 GHz on four cores and 64-bit Linux Mint Cinnamon operating system. We strongly recommend a similar or better hardware environment. The operating system however could be changed. 
+### Prerequisites
 
+1. [Java 11+](https://jdk.java.net/11/) 
+2. [Maven 3+](https://maven.apache.org)
+3. [Docker 20.10.7+](https://www.docker.com/) 
+4. [Docker Compose 3.9+](https://www.docker.com/) 
  
-
-## Running the tool mode 1 - replication package
+ 
 
 ### Downloading files:
 Download CROKAGE files [here](http://lascam.facom.ufu.br/companion/crokage/crokage-replication-package.zip) and place in a folder preferable in your home folder, ex /home/user/crokage-replication-package. 
