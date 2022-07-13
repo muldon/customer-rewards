@@ -159,8 +159,12 @@ Two test classes are available. First, the *RewardsTest* class illustrate two pu
 ## CI/CD
 The project contains a Jenkins file with a basic CI/CD pipeline. This pipeline is triggered by the `#build` token inside the git commit message. Everytime the developers commits a message containing this token, the pipeline run some maven commands (e.g. clean, install, test), build a docker image with sequenced generated ID and then push the image to a [Docker Hub](https://hub.docker.com) repository. It also notifies by email in case the build fails to run. This pipeline assumes the host contains a postgres running and the customer-rewards database.  
 
-## License
+## Health Check
+This projects uses [UptimeRobot](https://uptimerobot.com) to health check the application. A monitor was set to check on the [statement feature](http://161.97.114.171:8085/customer/statement/1/90) every 5 minutes. If the aplication stops running, an email alert is sent to estudantecomp@gmail.com.  
 
+
+
+## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details
 
 
