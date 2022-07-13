@@ -137,7 +137,18 @@ If it presents an error, don't worry, the container did not restart yet. You jus
 
 Then, access the URL in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html). Note that we run the app at port 8085 as in your yml file.  
 
+### Changing the app parameters
+You can change the app parameters by editing the file `application.context` under `src/main/resources`. If you are running it thought the containers, you can instead override them in your yml file. The specific parameters of the app, other than logging, spring framework, database and swagger are: 
 
+- scoring.factor
+- rewardBaseline1
+- rewardBaseline2
+
+These parameters are used in the formula to calculate the reward points as follows: *(purchaseValue - rewardBaseline1) x scoring.factor + (purchaseValue - rewardBaseline2) x scoring.factor = total points*
+
+
+### JUnit tests
+Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where one is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
 
 ## License
 
