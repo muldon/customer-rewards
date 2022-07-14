@@ -23,7 +23,7 @@ The complete challenge description is in the [CodingChallenge file](https://gith
 ### Demo 
 The app implementation can be found [here](http://161.97.114.171:8085/swagger-ui/index.html). This is a server hosted in [Contabo](https://contabo.com). [Swagger](https://swagger.io/) was used to provide the details about the endpoints. Basically the app provides two get methods:
 - /customer/list: returns a list of active customer names (2 for this example). Example [here](http://161.97.114.171:8085/customer/list).
-- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of days, e.g. 90 (last 3 months), returns the statement of the points of the user per month and a total. The app has supports not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. Example [here](http://161.97.114.171:8085/customer/statement/1/90): get a user statement for the last 3 months. 
+- /customer/statement/{customerId}/{lastNDays}: given a customer id (e.g. 1) and a number of days, e.g. 90 (last 3 months), returns the statement of the points of the user per month and a total. The app has support not only for the gain of points by user (e.g. when shopping) but also for their spending. For this example though, the focus is on the gain. Example [here](http://161.97.114.171:8085/customer/statement/1/90): get a user statement for the last 3 months. 
 
 The endpoints do not require a *content-type* in the request. Thus, you can test it using not only the [Swagger](https://swagger.io/) interface, but also your browser (for the two available get requests) or any other REST API tool, such as the RESTED browser plugin (available for chrome and firefox) or [Postman](https://www.postman.com/). The image bellow shows how to make a REST request using the [firefox RESTED plugin](https://addons.mozilla.org/en-US/firefox/addon/rested/).
 
@@ -53,7 +53,7 @@ The [Ondras](https://ondras.zarovi.cz/sql/demo/) tool was used to model the data
 ![DER](https://github.com/muldon/customer-rewards/blob/master/cr-der.png)
 
 The app contains three tables: 
-- cr_user: contains the users, that could be admin users or customers. In this example 
+- cr_user: contains the users, that could have different roles (admin, customer, etc). The app focuses on customers (roleId = 2).
 - cr_order: contains the orders (transactions). 
 - customer_rewards: contains the points accumulated during the transactions acording to three parameters (explained ahead). Each row in this table could represent a gain of points or a expense indicated by the operation_id, though in this app example only the gains are showed. 
 
@@ -85,11 +85,11 @@ obs. in a more complete app, there could exist a product table containing produc
 3. [pgAdmin 4](https://www.pgadmin.org/download/)
 4. [PostgreSQL 13.5](https://www.postgresql.org)  
 
-Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, edit your *application.context* file and set your database password at *spring.datasource.password*. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
+Check that your postgres is up and running at port 5432 (default), and Java, Maven and pgAdmin are correctly installed. Clone the project into a local folder (e.g. /home/jack/cr). Watch out that the features described are in the **master branch**. Then, open your pgAdmin4 and create a new databased called *sionodb*. Then, right click on the database -> Restore. Select the file *cr_db.backup* of this repo. Then check that three tables were built, along with their sequences. The tables contain records but we are more interested in their DDL, since everytime the app is run, the data is refreshed. Then, edit your *application.context* file and set your database password at *spring.datasource.password*. Then, on the console, go to the local folder where the project is located (e.g. /home/jack/cr) and type: 
 ```sh
 $ mvn package spring-boot:run
 ```
-This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8085/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+This command will trigger the several JUnit tests and run the application. The tests are set to pass. You then can access the application in your browser: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
   
 
 ### Running with containers
@@ -117,7 +117,7 @@ $ docker cp /home/jack/cr_db.backup cr_postgres_container:/cr_db.backup
 ```
 then, connect to the container:
 ```sh
-$ docker exec -it cr_postgres_container bash
+$ docker exec -it cr_postgres_container bash 
 ```
 then, create the database: 
 ```sh
@@ -152,11 +152,19 @@ You can change the app parameters by editing the file `application.context` unde
 These parameters are used in the formula to calculate the reward points as follows: *(purchaseValue - rewardBaseline1) x scoring.factor + (purchaseValue - rewardBaseline2) x scoring.factor = total points*
 
 
-### JUnit tests
-Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where one is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
+## JUnit tests
+Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where the first is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
+
+
+## CI/CD
+The project contains a Jenkins file with a basic CI/CD pipeline. This pipeline is triggered by the `#build` token inside the git commit message. Everytime the developers commit a message containing this token, the pipeline runs some maven commands (e.g. clean, install, test), builds a docker image with sequenced generated ID and then pushes the image to a [Docker Hub](https://hub.docker.com) repository. It also notifies by email in case the build fails to run. This pipeline assumes the host contains postgres up and running with the customer-rewards database.  
+
+## Health Check
+This projects uses [UptimeRobot](https://uptimerobot.com) to health check the application. A monitor was set to check on the [statement feature](http://161.97.114.171:8085/customer/statement/1/90) every 5 minutes. If the aplication stops running, an email alert is sent to estudantecomp@gmail.com.  
+
+
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details
 
 
