@@ -35,15 +35,7 @@ public class UserServiceImpl extends MainService implements UserService{
 		return tos;		
 	} 
 	 
-	
-	@Transactional(readOnly = true)
-	public void findByFilters(SearchParams searchParams, User wrapper) {
-		Utils.checkSearchParams(searchParams);
-		
-		genericRepository.findUsersByFilters(searchParams,wrapper);				
-		 
-	}
-
+	 
 	@Transactional(readOnly = true)
 	public Optional<User> findById(Integer id) {
 		Optional<User> v = userRepository.findById(id);

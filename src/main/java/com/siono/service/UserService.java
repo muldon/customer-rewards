@@ -11,9 +11,7 @@ import com.siono.model.SearchParams;
 
 public interface UserService {
 
-	public List<User> findAll(Sort by);
-
-	public void findByFilters(SearchParams searchParams, User wrapper);
+	public List<User> findAll(Sort by); 
 
 	public Optional<User> findById(Integer id);
 	

@@ -12,7 +12,6 @@ import com.siono.model.Order;
 import com.siono.model.SearchParams;
 import com.siono.model.User;
 import com.siono.repository.GenericRepository;
-import com.siono.utils.Utils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,16 +73,6 @@ public class GenericRepositoryImpl implements GenericRepository {
 		
 		
 	}
-
-	@Override
-	public void findUsersByFilters(SearchParams searchParams, User wrapper) {
-		//Similar to orders, but not in use for now... 
-		
-	}
-
-
-
- 
-
+  
 	 	
 }

@@ -3,12 +3,10 @@ package com.siono.utils;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,10 +16,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.siono.model.CustomerRewards;
 import com.siono.model.Order;
 import com.siono.model.Order.OrderStatusEnum;
 import com.siono.model.SearchParams;
@@ -162,7 +158,7 @@ public class Utils {
 		for(int i=0; i<30; i++) {  //let's create 30 transactions (orders) for testing 
 			orders.add(createTestOrder(customerId));
 		}		
-		
+		log.debug("Randon orders generated...");
 		return orders;
 	}
 	

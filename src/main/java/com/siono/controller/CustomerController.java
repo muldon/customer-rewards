@@ -60,6 +60,7 @@ public class CustomerController {
 	@GetMapping("/list")
 	@ResponseStatus(HttpStatus.OK)
 	public List<String> getCustomerNames() {
+		log.info("Retrieving customer names");
 		List<User> activeUsers = userService.findByRoleIdAndStatusId(UserRoleEnum.CUSTOMER.getId(),UserStatusEnum.ACTIVE.getId(),Sort.by(Sort.Direction.ASC,"name"));
 		List<String> customerNames = activeUsers.stream().map(u -> u.getName()).collect(Collectors.toCollection(ArrayList::new));
 		return customerNames;
@@ -76,9 +77,10 @@ public class CustomerController {
 		Statement responseWrapper = new Statement();
 		Optional<User> user = userService.findById(customerId);
 		if(!user.isPresent()) {
+			log.error("User not found: "+customerId);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
-		log.info("genereting statement for customer "+user.get().getName()+ " for the last "+lastNDays+ " days");
+		log.info("Genereting statement for customer "+user.get().getName()+ " for the last "+lastNDays+ " days");
 		Timestamp dateFrom = Timestamp.from(Instant.now().minus(Duration.ofDays(lastNDays))); //last n days 
 		List<CustomerRewards> rewardsList = rewardsService.findByCustomerIdAndDateAfter(customerId,dateFrom,Sort.by(Sort.Direction.ASC, "date"));
 		buildStatement(rewardsList,responseWrapper,user.get());		 
