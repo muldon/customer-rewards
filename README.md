@@ -117,7 +117,7 @@ $ docker cp /home/jack/cr_db.backup cr_postgres_container:/cr_db.backup
 ```
 then, connect to the container:
 ```sh
-$ docker exec -it cr_postgres_container bash
+$ docker exec -it cr_postgres_container bash 
 ```
 then, create the database: 
 ```sh
