@@ -153,7 +153,7 @@ These parameters are used in the formula to calculate the reward points as follo
 
 
 ## JUnit tests
-Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where one is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
+Two test classes are available. First, the *RewardsTest* class illustrate two purchase scenarios, where the first is the one given in the challenge. Second, the *OrdersTest* class contains several usual methods in a real app, such as CRUD methods, a search with filters containing pagination parameters (commonly used in tables), the change of an order status, etc. The tests are usually part of a CI/CD process. 
 
 
 ## CI/CD
