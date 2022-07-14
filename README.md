@@ -53,7 +53,7 @@ The [Ondras](https://ondras.zarovi.cz/sql/demo/) tool was used to model the data
 ![DER](https://github.com/muldon/customer-rewards/blob/master/cr-der.png)
 
 The app contains three tables: 
-- cr_user: contains the users, that could be admin users or customers. In this example 
+- cr_user: contains the users, that could have different roles (admin, customer, etc). The app focuses on customers (roleId = 2).
 - cr_order: contains the orders (transactions). 
 - customer_rewards: contains the points accumulated during the transactions acording to three parameters (explained ahead). Each row in this table could represent a gain of points or a expense indicated by the operation_id, though in this app example only the gains are showed. 
 
