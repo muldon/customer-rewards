@@ -1,7 +1,6 @@
 package com.siono.test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,13 +15,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.siono.model.Order;
+import com.siono.model.Order.OrderStatusEnum;
 import com.siono.model.SearchParams;
 import com.siono.model.User;
-import com.siono.model.Order.OrderStatusEnum;
 import com.siono.service.OrderService;
+import com.siono.service.RewardsService;
 import com.siono.service.UserService;
 import com.siono.utils.Utils;
 
@@ -31,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class OderTest {
+class OrdersTest {
 	public static Integer orderId;
 	public static Integer userId;
 	 
@@ -40,11 +39,15 @@ class OderTest {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RewardsService rewardsService;
  
 	@Test
 	@org.junit.jupiter.api.Order(1)
 	public void createTest() {
-		User user = Utils.createTestUser();
+		log.debug("createTest initiated");
+		User user = Utils.createTestUser(1,"Rick Silva");
 		userService.save(user);
 		userId = user.getId();
 		Order order = Utils.createTestOrder(user.getId());
@@ -57,19 +60,30 @@ class OderTest {
 	@org.junit.jupiter.api.Order(2)
 	public void readTest() {
 		List<Order> allOrders = orderService.findAll(Sort.by(Sort.Direction.ASC,"id"));
+		log.debug("readTest done. Orders retrieved: "+allOrders.size());
 		assertTrue(allOrders.size()>0); //the @org.junit.jupiter.api.Order(2) annotation guarantees that the previous method (insert) will be invoked before		
 	}
 	
 	@Test
 	@org.junit.jupiter.api.Order(3)
 	public void updateTest() {
-		Order order = orderService.findById(orderId); 
-		assertNotNull(order);
+		List<Order> allOrders = orderService.findAll(Sort.by(Sort.Direction.ASC,"id"));
+		Order first = allOrders.get(0);
+		first.setStatusId(OrderStatusEnum.PROCESSING.getId());
+		orderService.updateById(first.getId(), first);
+		log.debug("updateTest - order updated");
+		Order firstTmp = orderService.findById(first.getId());
+		assertTrue(firstTmp.getStatusId().equals(OrderStatusEnum.PROCESSING.getId()));
+		
 	}
 	
 	@Test
 	@org.junit.jupiter.api.Order(4)
 	public void deleteTest() {
+		
+		//first delete the Customer Rewards related to that order
+		rewardsService.deleteByOrderId(orderId);
+		log.info("deleteTest - before deleting the order");
 		orderService.deleteById(orderId);
 		
 		Exception exception = assertThrows(RuntimeException.class, () -> {
@@ -129,18 +143,7 @@ class OderTest {
 		assertTrue(ordersByCustomer.size() <= allOrders.size());
 	}
 	
-	@Test
-	@org.junit.jupiter.api.Order(8)
-	public void updateByIdTest() {
-		List<Order> allOrders = orderService.findAll(Sort.by(Sort.Direction.ASC,"id"));
-		Order first = allOrders.get(0);
-		first.setTotalValue(1d);
-		orderService.updateById(first.getId(), first);
-		
-		Order firstTmp = orderService.findById(first.getId());
-		assertTrue(firstTmp.getTotalValue().equals(1d));
-		
-	}
+	
 	
 	@Test
 	@org.junit.jupiter.api.Order(9)
@@ -155,5 +158,6 @@ class OderTest {
 		
 	}
 	
+	 
 
 }

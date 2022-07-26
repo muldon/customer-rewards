@@ -1,6 +1,7 @@
 package com.siono.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,25 +35,19 @@ public class UserServiceImpl extends MainService implements UserService{
 		return tos;		
 	} 
 	 
-	
-	@Transactional(readOnly = true)
-	public void findByFilters(SearchParams searchParams, User wrapper) {
-		Utils.checkSearchParams(searchParams);
-		
-		genericRepository.findUsersByFilters(searchParams,wrapper);				
-		 
-	}
-
-	@Transactional(readOnly = true)
-	public User findById(Integer id) {
-		Optional<User> v = userRepository.findById(id);
-		if(v.isPresent()) {
-			return v.get();
-		}
-		return null;				
-	}
-
 	 
+	@Transactional(readOnly = true)
+	public Optional<User> findById(Integer id) {
+		Optional<User> v = userRepository.findById(id);
+		return v;				
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> findByRoleIdAndStatusId(Integer roleId, Integer statusId, Sort by) {
+		List<User> activeCustomers = userRepository.findByRoleIdAndStatusId(roleId,statusId,by);
+		return activeCustomers;
+	} 
 	 
 	   
 	// -----------------------------------------------   Transacional Methods ------------------------------------------ //
@@ -86,6 +81,8 @@ public class UserServiceImpl extends MainService implements UserService{
 		userRepository.changeStatus(user.getId(), user.getStatusId());
 		return createMessageResponse("Status updated");
 	}
+
+
 	 
 
 }

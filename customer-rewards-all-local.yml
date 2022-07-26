@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  postgres-db:
+    container_name: cr_postgres_container
+    image: rodrigofgs/postgres:1.0
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: mypqdbpass
+    volumes:
+       - postgres-data-cr:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped  
+    networks:
+      - my-app-network
+      
+  customer-rewards:
+    container_name: customer-rewards
+    image: rodrigofgs/customer-rewards:1.0.6
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cr_postgres_container:5432/sionodb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: mypqdbpass      
+      JAVA_TOOL_OPTIONS: "-Xmx628m"
+    ports:
+      - "8085:8080"   
+    volumes:
+      - /home/rodrigo/projects/customer-rewards/logs:/logs
+    restart: unless-stopped  
+    networks:
+      - my-app-network   
+    deploy:
+      resources:
+          limits:
+            memory: 628M
+          reservations:
+            memory: 128M 
+   
+volumes:
+  postgres-data-cr:     
+   
+networks: 
+  my-app-network:
+    driver: bridge

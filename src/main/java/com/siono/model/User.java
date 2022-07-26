@@ -42,8 +42,6 @@ public class User extends GenericTO<User> implements Serializable {
    
    @EqualsAndHashCode.Include
    @Id
-   @SequenceGenerator(name="user_id_seq", sequenceName="user_id_seq",allocationSize=1)
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_id_seq")
    @XmlElement
    private Integer id;
    
@@ -111,9 +109,9 @@ public class User extends GenericTO<User> implements Serializable {
 		private final String description;
 				
 		
-		UserStatusEnum(Integer id,String descricao){
+		UserStatusEnum(Integer id,String description){
 			this.id = id;
-			this.description = descricao;		
+			this.description = description;		
 		}
 		
 	    public static UserStatusEnum getStatusById(Integer id){

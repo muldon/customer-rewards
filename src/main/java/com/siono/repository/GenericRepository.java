@@ -8,6 +8,5 @@ public interface GenericRepository {
 	
 	void findOrdersByFilters(SearchParams searchParams, Order wrapper);
 
-	void findUsersByFilters(SearchParams searchParams, User wrapper);
-    
+	 
 }

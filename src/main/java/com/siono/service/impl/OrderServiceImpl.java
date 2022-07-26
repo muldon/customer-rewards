@@ -4,16 +4,20 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.siono.aspect.Loggable;
+import com.siono.model.CustomerRewards;
+import com.siono.model.CustomerRewards.OperationEnum;
 import com.siono.model.MessageResponse;
 import com.siono.model.Order;
 import com.siono.model.SearchParams;
 import com.siono.service.MainService;
 import com.siono.service.OrderService;
+import com.siono.service.RewardsService;
 import com.siono.utils.Utils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class OrderServiceImpl extends MainService implements OrderService{	     
-	
+	@Autowired
+	RewardsService rewardsService;
+ 
 	  
 	private void verifyIfExists(Integer id) {
         this.orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Id not found: "+id));
@@ -76,11 +82,25 @@ public class OrderServiceImpl extends MainService implements OrderService{
 
 	public MessageResponse save(Order to) {
 		
-		if(to.getId()==null && to.getDate()==null) { //new order
-			to.setDate(new Timestamp(System.currentTimeMillis()));
+		Integer points = 0;
+		
+		if(to.getId()==null) { //new order
+			if(to.getDate()==null) {
+				to.setDate(new Timestamp(System.currentTimeMillis()));
+			}			
+			
+			//calculate rewards based on the order value (transaction value)
+			points = rewardsService.calculateRewardPoints(to.getTotalValue());
+			
+		}else {
+			log.info("updating order..."); //for example, changing the status of an order from REQUESTED to PROCESSING, or from PAID to DELIVERED
 		}
 		
-		orderRepository.save(to);		
+		orderRepository.save(to);
+		if(points>0) { //customer is receiving points
+			CustomerRewards cr = new CustomerRewards(null,to.getCustomerId(), to.getId(),OperationEnum.INPUT.getId(),points,to.getDate());
+			customerRewardsRepository.save(cr);
+		}
 		
         return createMessageResponse("Order saved");
 	}

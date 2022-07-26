@@ -3,7 +3,6 @@ package com.siono.utils;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
@@ -34,7 +33,7 @@ public class Utils {
 	static DateFormat sdfFull; 
 	static DateFormat sdfMin; 
 	static Calendar calendar;
-	static DecimalFormat df;	
+	  
 	
 	@PostConstruct
 	public void configure() {		
@@ -43,16 +42,14 @@ public class Utils {
 	 	
 		sdfFull.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
 		sdfMin.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
-		
-		df = new DecimalFormat("0.00");
+		 
 	}		
 
     
 	public static boolean isBlank(String input) {
 		return StringUtils.isBlank(input);
 	}
-
-	 
+ 
 	
 	//The synchronized key-word guarantees that our methods are thread safe 	
 	public synchronized static String getCurrentDate() {
@@ -119,15 +116,15 @@ public class Utils {
 	
 	
 	
-	public static User createTestUser() {
+	public static User createTestUser(Integer id, String name) {
 		User user = new User();		
-		user.setName("Rick Silva");
+		user.setId(id);
+		user.setName(name);
 		user.setStatusId(UserStatusEnum.ACTIVE.getId());
-		user.setEmail("ricksilva@gmail.com");
+		user.setEmail(name.replaceAll(" ","").toLowerCase()+"@gmail.com");
 		user.setRoleId(UserRoleEnum.CUSTOMER.getId());
 		user.setPhone("+197412345");
-		user.setDate(new Timestamp(System.currentTimeMillis()));	
-
+		user.setDate(new Timestamp(System.currentTimeMillis()));
 		return user;
 	}
 	
@@ -152,6 +149,7 @@ public class Utils {
 		Instant now = Instant.now();
 		Instant random = getRandomDateBetween(threeMonthsAgo, now);		
 		order.setDate(Timestamp.from(random));
+		
 		return order;
 	}
 	
@@ -160,9 +158,14 @@ public class Utils {
 		for(int i=0; i<30; i++) {  //let's create 30 transactions (orders) for testing 
 			orders.add(createTestOrder(customerId));
 		}		
-		
+		log.debug("Randon orders generated...");
 		return orders;
 	}
 	
+	public static Integer getMonthFromDate(Timestamp date) {
+		LocalDate localDate = date.toLocalDateTime().toLocalDate();
+		return localDate.getMonthValue();
+	}
+ 
 	   
 }

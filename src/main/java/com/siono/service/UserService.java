@@ -1,6 +1,7 @@
 package com.siono.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 
@@ -10,11 +11,9 @@ import com.siono.model.SearchParams;
 
 public interface UserService {
 
-	public List<User> findAll(Sort by);
+	public List<User> findAll(Sort by); 
 
-	public void findByFilters(SearchParams searchParams, User wrapper);
-
-	public User findById(Integer id);
+	public Optional<User> findById(Integer id);
 	
 	public void deleteById(Integer id);
 
@@ -23,5 +22,7 @@ public interface UserService {
 	public User updateById(Integer id, User order);
 
 	public MessageResponse changeStatus(User order);
+
+	public List<User> findByRoleIdAndStatusId(Integer roleId, Integer statusId, Sort by);
 
 }
